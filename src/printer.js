@@ -155,7 +155,10 @@ function getPropertyPadding(options, path) {
 
   const properties = parentObject.properties;
   const lengths = properties.map(
-    p => p.key.end - p.key.start + (p.computed ? 2 : 0)
+    p => {
+      if (!p.key) return 0;
+      return p.key.end - p.key.start + (p.computed ? 2 : 0)
+    }
   );
   const maxLength = Math.max.apply(null, lengths);
   const padLength = maxLength - nameLength + 1;
