@@ -27,6 +27,7 @@ const argv = minimist(process.argv.slice(2), {
     "break-before-else",
     "flatten-ternaries",
     "jsx-bracket-same-line",
+    "jsx-attributes-indent",
     "align-object-properties",
     "space-empty-fn",
     // The supports-color package (a sub sub dependency) looks directly at
@@ -182,6 +183,7 @@ const options = {
   breakBeforeElse: argv["break-before-else"],
   singleQuote: argv["single-quote"],
   jsxBracketSameLine: argv["jsx-bracket-same-line"],
+  jsxAttributesIndent: argv["jsx-attributes-indent"],
   noSpaceEmptyFn: !argv["space-empty-fn"],
   filepath: argv["stdin-filepath"],
   trailingComma: getTrailingComma(),
@@ -272,6 +274,7 @@ if (argv["help"] || (!filepatterns.length && !stdin)) {
       "  --flatten-ternaries      Format ternaries in a flat style.\n" +
       "  --break-before-else      Put `else` clause in a new line.\n" +
       "  --jsx-bracket-same-line  Put > on the last line instead of at a new line.\n" +
+      "  --jsx-attributes-indent  Indent multiline attributes with a single space.\n" +
       "  --trailing-comma <none|es5|all>\n" +
       "                           Print trailing commas wherever possible. Defaults to none.\n" +
       "                           You can customize with a comma separated list. 'all' is equivalent to:\n" +

@@ -43,6 +43,7 @@ const defaults = {
   flattenTernaries: false,
   breakBeforeElse: false,
   jsxBracketSameLine: false,
+  jsxAttributesIndent: false,
   alignObjectProperties: false,
   noSpaceEmptyFn: false,
   parser: "babylon",

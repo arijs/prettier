@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test.js 1`] = `
+<SomeHighlyConfiguredComponent
+  onEnter={this.onEnter}
+  onLeave={this.onLeave}
+  onChange={this.onChange}
+  initialValue={this.state.initialValue}
+  bigObject={{
+    test: value,
+    test2: otherValue,
+  }}
+  ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<SomeHighlyConfiguredComponent
+ onEnter={this.onEnter}
+ onLeave={this.onLeave}
+ onChange={this.onChange}
+ initialValue={this.state.initialValue}
+ bigObject={{
+  test: value,
+  test2: otherValue
+ }}
+ ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>;
+
+`;
+
+exports[`test.js 2`] = `
+<SomeHighlyConfiguredComponent
+  onEnter={this.onEnter}
+  onLeave={this.onLeave}
+  onChange={this.onChange}
+  initialValue={this.state.initialValue}
+  bigObject={{
+    test: value,
+    test2: otherValue,
+  }}
+  ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<SomeHighlyConfiguredComponent
+  onEnter={this.onEnter}
+  onLeave={this.onLeave}
+  onChange={this.onChange}
+  initialValue={this.state.initialValue}
+  bigObject={{
+    test: value,
+    test2: otherValue
+  }}
+  ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>;
+
+`;
+
+exports[`test.js 3`] = `
+<SomeHighlyConfiguredComponent
+  onEnter={this.onEnter}
+  onLeave={this.onLeave}
+  onChange={this.onChange}
+  initialValue={this.state.initialValue}
+  bigObject={{
+    test: value,
+    test2: otherValue,
+  }}
+  ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<SomeHighlyConfiguredComponent
+ onEnter={this.onEnter}
+ onLeave={this.onLeave}
+ onChange={this.onChange}
+ initialValue={this.state.initialValue}
+ bigObject={{
+	test: value,
+	test2: otherValue
+ }}
+ ignoreStuff={true}
+>
+	<div>and the children go here</div>
+	<div>and here too</div>
+</SomeHighlyConfiguredComponent>;
+
+`;
+
+exports[`test.js 4`] = `
+<SomeHighlyConfiguredComponent
+  onEnter={this.onEnter}
+  onLeave={this.onLeave}
+  onChange={this.onChange}
+  initialValue={this.state.initialValue}
+  bigObject={{
+    test: value,
+    test2: otherValue,
+  }}
+  ignoreStuff={true}
+>
+  <div>and the children go here</div>
+  <div>and here too</div>
+</SomeHighlyConfiguredComponent>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<SomeHighlyConfiguredComponent
+	onEnter={this.onEnter}
+	onLeave={this.onLeave}
+	onChange={this.onChange}
+	initialValue={this.state.initialValue}
+	bigObject={{
+		test: value,
+		test2: otherValue
+	}}
+	ignoreStuff={true}
+>
+	<div>and the children go here</div>
+	<div>and here too</div>
+</SomeHighlyConfiguredComponent>;
+
+`;
