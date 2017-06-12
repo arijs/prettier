@@ -4393,16 +4393,18 @@ function genericPrintNoParens(path, options, print, args) {
         );
       }
 
+      const attributes = concat$2(
+        path.map(attr => concat$2([line$1, print(attr)]), "attributes")
+      );
+
       return group$1(
         concat$2([
           "<",
           path.call(print, "name"),
           concat$2([
-            indent$2(
-              concat$2(
-                path.map(attr => concat$2([line$1, print(attr)]), "attributes")
-              )
-            ),
+            options.jsxAttributesIndent
+              ? align$1({ forceSpace: true }, attributes)
+              : indent$2(attributes),
             n.selfClosing ? line$1 : options.jsxBracketSameLine ? ">" : softline$1
           ]),
           n.selfClosing ? "/>" : options.jsxBracketSameLine ? "" : ">"
@@ -7712,6 +7714,17 @@ function makeAlign(ind, n) {
     };
   }
 
+  if (isNaN(n) && n.forceSpace) {
+    return {
+      indent: ind.indent,
+      align: {
+        spaces: ind.align.spaces,
+        tabs: ind.align.tabs,
+        forceSpace: ind.indent
+      }
+    };
+  }
+
   return {
     indent: ind.indent,
     align: {
@@ -8077,9 +8090,14 @@ function printDocToString$1(doc, options) {
                 }
 
                 const length = ind.indent * options.tabWidth + ind.align.spaces;
-                const indentString = options.useTabs
+                let indentString = options.useTabs
                   ? "\t".repeat(ind.indent + ind.align.tabs)
                   : " ".repeat(length);
+
+                if (ind.align.forceSpace !== undefined && ind.align.forceSpace === ind.indent) {
+                  indentString += " ";
+                }
+
                 out.push(newLine + indentString);
                 pos = length;
               }
@@ -11853,6 +11871,7 @@ const defaults = {
   trailingComma: "none",
   bracketSpacing: true,
   jsxBracketSameLine: false,
+  jsxAttributesIndent: false,
   parser: "babylon",
   semi: true
 };

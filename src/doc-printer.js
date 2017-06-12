@@ -36,6 +36,17 @@ function makeAlign(ind, n) {
     };
   }
 
+  if (isNaN(n) && n.forceSpace) {
+    return {
+      indent: ind.indent,
+      align: {
+        spaces: ind.align.spaces,
+        tabs: ind.align.tabs,
+        forceSpace: ind.indent
+      }
+    };
+  }
+
   return {
     indent: ind.indent,
     align: {
@@ -404,9 +415,14 @@ function printDocToString(doc, options) {
                 }
 
                 const length = ind.indent * options.tabWidth + ind.align.spaces;
-                const indentString = options.useTabs
+                let indentString = options.useTabs
                   ? "\t".repeat(ind.indent + ind.align.tabs)
                   : " ".repeat(length);
+
+                if (ind.align.forceSpace !== undefined && ind.align.forceSpace === ind.indent) {
+                  indentString += " ";
+                }
+
                 out.push(newLine + indentString);
                 pos = length;
               }
