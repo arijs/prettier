@@ -140,7 +140,7 @@ objects]._
 Install:
 
 ```
-yarn add prettier-with-tabs --dev
+yarn add prettier-miscellaneous --dev
 =======
 yarn add prettier --dev
 ```
@@ -148,13 +148,13 @@ yarn add prettier --dev
 You can install it globally if you like:
 
 ```
-yarn global add prettier-with-tabs
+yarn global add prettier-miscellaneous
 ```
 
 *We're defaulting to `yarn` but you can use `npm` if you like:*
 
 ```
-npm install [-g] prettier-with-tabs
+npm install [-g] prettier-miscellaneous
 ```
 
 ### CLI
@@ -293,7 +293,7 @@ Prettier ships with a handful of customizable format options, usable in both the
 The API has three functions, exported as `format`, `check`, and `formatWithCursor`. `format` usage is as follows:
 
 ```js
-const prettier = require("prettier-with-tabs");
+const prettier = require("prettier-miscellaneous");
 
 const options = {} // optional
 prettier.format(source, options);
