@@ -130,7 +130,7 @@ FastPath.prototype.map = function map(callback /*, name1, name2, ... */) {
   return result;
 };
 
-FastPath.prototype.needsParens = function() {
+FastPath.prototype.needsParens = function(options) {
   const parent = this.getParentNode();
   if (!parent) {
     return false;
@@ -194,11 +194,24 @@ FastPath.prototype.needsParens = function() {
   }
 
   switch (node.type) {
-    case "CallExpression":
-      if (parent.type === "NewExpression" && parent.callee === node) {
+    case "CallExpression": {
+      let firstParentNotMemberExpression = parent;
+      let i = 0;
+      while (
+        firstParentNotMemberExpression &&
+        firstParentNotMemberExpression.type === "MemberExpression"
+      ) {
+        firstParentNotMemberExpression = this.getParentNode(++i);
+      }
+
+      if (
+        firstParentNotMemberExpression.type === "NewExpression" &&
+        firstParentNotMemberExpression.callee === this.getParentNode(i - 1)
+      ) {
         return true;
       }
       return false;
+    }
 
     case "SpreadElement":
     case "SpreadProperty":
@@ -330,6 +343,23 @@ FastPath.prototype.needsParens = function() {
           return false;
       }
 
+    case "TSParenthesizedType": {
+      if (
+        (parent.type === "VariableDeclarator" ||
+          parent.type === "TypeAnnotation" ||
+          parent.type === "GenericTypeAnnotation") &&
+        (node.typeAnnotation.type === "TypeAnnotation" &&
+          node.typeAnnotation.typeAnnotation.type !== "TSFunctionType")
+      ) {
+        return false;
+      }
+      // Delegate to inner TSParenthesizedType
+      if (node.typeAnnotation.type === "TSParenthesizedType") {
+        return false;
+      }
+      return true;
+    }
+
     case "SequenceExpression":
       switch (parent.type) {
         case "ReturnStatement":
@@ -405,8 +435,27 @@ FastPath.prototype.needsParens = function() {
         parent.type === "IntersectionTypeAnnotation"
       );
 
+    case "StringLiteral":
     case "NumericLiteral":
     case "Literal":
+      if (
+        typeof node.value === "string" &&
+        parent.type === "ExpressionStatement" &&
+        // TypeScript workaround for eslint/typescript-eslint-parser#267
+        // See corresponding workaround in printer.js case: "Literal"
+        ((options.parser !== "typescript" && !parent.directive) ||
+          (options.parser === "typescript" &&
+            options.originalText.substr(util.locStart(node) - 1, 1) === "("))
+      ) {
+        // To avoid becoming a directive
+        const grandParent = this.getParentNode(1);
+
+        return (
+          grandParent.type === "Program" ||
+          grandParent.type === "BlockStatement"
+        );
+      }
+
       return (
         parent.type === "MemberExpression" &&
         typeof node.value === "number" &&
@@ -523,9 +572,6 @@ FastPath.prototype.needsParens = function() {
 
     case "ClassExpression":
       return parent.type === "ExportDefaultDeclaration";
-
-    case "StringLiteral":
-      return parent.type === "ExpressionStatement"; // To avoid becoming a directive
   }
 
   return false;

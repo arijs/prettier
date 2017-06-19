@@ -9,6 +9,70 @@ abstract interface I {}
 
 `;
 
+exports[`comments.js 1`] = `
+interface ScreenObject {
+	// I make things weird.
+	at(point: Point): Screen | undefined;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+interface ScreenObject {
+  // I make things weird.
+  at(point: Point): Screen | undefined;
+}
+
+`;
+
+exports[`long-extends.ts 1`] = `
+export interface I extends A, B, C {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName extends ALongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName extends ALongAndBoringInterfaceName, AnotherLongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName extends AVeryLongAndBoringInterfaceName, AnotherVeryLongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName extends A_AVeryLongAndBoringInterfaceName, B_AVeryLongAndBoringInterfaceName, C_AVeryLongAndBoringInterfaceName  {
+  c: string;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export interface I extends A, B, C {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName
+  extends ALongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName
+  extends ALongAndBoringInterfaceName,
+    AnotherLongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName
+  extends AVeryLongAndBoringInterfaceName,
+    AnotherVeryLongAndBoringInterfaceName {
+  c: string;
+}
+
+export interface ThirdVeryLongAndBoringInterfaceName
+  extends A_AVeryLongAndBoringInterfaceName,
+    B_AVeryLongAndBoringInterfaceName,
+    C_AVeryLongAndBoringInterfaceName {
+  c: string;
+}
+
+`;
+
 exports[`separator.ts 1`] = `
 declare module 'selenium-webdriver' {
   export const until: {

@@ -6,7 +6,7 @@ const printAstToDoc = require("./src/printer").printAstToDoc;
 const util = require("./src/util");
 const printDocToString = require("./src/doc-printer").printDocToString;
 const normalizeOptions = require("./src/options").normalize;
-const parser = require("./parser");
+const parser = require("./src/parser");
 const printDocToDebug = require("./src/doc-debug").printDocToDebug;
 
 function guessLineEnding(text) {
@@ -125,7 +125,8 @@ function findSiblingAncestors(startNodeAndParents, endNodeAndParents) {
   };
 }
 
-function findNodeAtOffset(node, offset, parentNodes) {
+function findNodeAtOffset(node, offset, predicate, parentNodes) {
+  predicate = predicate || (() => true);
   parentNodes = parentNodes || [];
   const start = util.locStart(node);
   const end = util.locEnd(node);
@@ -134,6 +135,7 @@ function findNodeAtOffset(node, offset, parentNodes) {
       const childResult = findNodeAtOffset(
         childNode,
         offset,
+        predicate,
         [node].concat(parentNodes)
       );
       if (childResult) {
@@ -141,7 +143,7 @@ function findNodeAtOffset(node, offset, parentNodes) {
       }
     }
 
-    if (isSourceElement(node)) {
+    if (predicate(node)) {
       return {
         node: node,
         parentNodes: parentNodes
@@ -199,8 +201,16 @@ function calculateRange(text, opts, ast) {
     }
   }
 
-  const startNodeAndParents = findNodeAtOffset(ast, startNonWhitespace);
-  const endNodeAndParents = findNodeAtOffset(ast, endNonWhitespace);
+  const startNodeAndParents = findNodeAtOffset(
+    ast,
+    startNonWhitespace,
+    isSourceElement
+  );
+  const endNodeAndParents = findNodeAtOffset(
+    ast,
+    endNonWhitespace,
+    isSourceElement
+  );
   const siblingAncestors = findSiblingAncestors(
     startNodeAndParents,
     endNodeAndParents

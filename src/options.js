@@ -63,12 +63,24 @@ function normalize(options) {
 
   if (/\.(css|less|scss)$/.test(filepath)) {
     normalized.parser = "postcss";
+  } else if (/\.html$/.test(filepath)) {
+    normalized.parser = "parse5";
   } else if (/\.(ts|tsx)$/.test(filepath)) {
     normalized.parser = "typescript";
   }
 
   normalized.trailingComma = normalizeTrailingComma(normalized.trailingComma);
+
+  const parserBackup = normalized.parser;
+  if (typeof normalized.parser === "function") {
+    // Delete the function from the object to pass validation.
+    delete normalized.parser;
+  }
+
   validate(normalized, { exampleConfig, deprecatedConfig });
+
+  // Restore the option back to a function;
+  normalized.parser = parserBackup;
 
   // For backward compatibility. Deprecated in 0.0.10
   if ("useFlowParser" in normalized) {

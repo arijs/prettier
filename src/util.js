@@ -206,8 +206,20 @@ function hasSpaces(text, index, opts) {
 }
 
 function locStart(node) {
+  // Handle nodes with decorators. They should start at the first decorator
+  if (
+    node.declaration &&
+    node.declaration.decorators &&
+    node.declaration.decorators.length > 0
+  ) {
+    return locStart(node.declaration.decorators[0]);
+  }
   if (node.decorators && node.decorators.length > 0) {
     return locStart(node.decorators[0]);
+  }
+
+  if (node.__location) {
+    return node.__location.startOffset;
   }
   if (node.range) {
     return node.range[0];
@@ -221,15 +233,22 @@ function locStart(node) {
 }
 
 function locEnd(node) {
+  let loc;
   if (node.range) {
-    return node.range[1];
+    loc = node.range[1];
+  } else if (typeof node.end === "number") {
+    loc = node.end;
+  } else if (node.source) {
+    loc = lineColumnToIndex(node.source.end, node.source.input.css);
   }
-  if (typeof node.end === "number") {
-    return node.end;
+
+  if (node.__location) {
+    return node.__location.endOffset;
   }
-  if (node.source) {
-    return lineColumnToIndex(node.source.end, node.source.input.css);
+  if (node.typeAnnotation) {
+    return Math.max(loc, locEnd(node.typeAnnotation));
   }
+  return loc;
 }
 
 // Super inefficient, needs to be cached.
@@ -337,9 +356,8 @@ function startsWithNoLookaheadToken(node, forbidFunctionAndClass) {
 function getLeftMost(node) {
   if (node.left) {
     return getLeftMost(node.left);
-  } else {
-    return node;
   }
+  return node;
 }
 
 function hasBlockComments(node) {

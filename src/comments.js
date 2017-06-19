@@ -68,12 +68,7 @@ function getSortedChildNodes(node, text, resultArray) {
     });
   }
 
-  for (
-    let i = 0,
-      nameCount = names.length;
-    i < nameCount;
-    ++i
-  ) {
+  for (let i = 0, nameCount = names.length; i < nameCount; ++i) {
     getSortedChildNodes(node[names[i]], text, resultArray);
   }
 
@@ -374,6 +369,13 @@ function addCommentHelper(node, comment) {
   const comments = node.comments || (node.comments = []);
   comments.push(comment);
   comment.printed = false;
+
+  // For some reason, TypeScript parses `// x` inside of JSXText as a comment
+  // We already "print" it via the raw text, we don't need to re-print it as a
+  // comment
+  if (node.type === "JSXText") {
+    comment.printed = true;
+  }
 }
 
 function addLeadingComment(node, comment) {

@@ -102,24 +102,7 @@ function getParserOption() {
     return "flow";
   }
 
-  if (
-    value === "flow" ||
-    value === "babylon" ||
-    value === "typescript" ||
-    value === "postcss"
-  ) {
-    return value;
-  }
-
-  console.warn(
-    "Ignoring unknown --" +
-      optionName +
-      ' value, falling back to "babylon":\n' +
-      '  Expected "flow" or "babylon", but received: ' +
-      JSON.stringify(value)
-  );
-
-  return "babylon";
+  return value;
 }
 
 function getIntOption(optionName) {
@@ -221,7 +204,7 @@ function format(input, opt) {
           diff(input, pp);
       }
     }
-    return {};
+    return { formatted: opt.filepath || "(stdin)\n" };
   }
 
   return prettier.formatWithCursor(input, opt);
@@ -310,7 +293,7 @@ if (stdin) {
   });
 } else {
   eachFilename(filepatterns, filename => {
-    if (write || argv["debug-check"]) {
+    if (write) {
       // Don't use `console.log` here since we need to replace this line.
       process.stdout.write(filename);
     }
@@ -329,7 +312,12 @@ if (stdin) {
     }
 
     if (argv["list-different"]) {
-      if (!prettier.check(input, options)) {
+      if (
+        !prettier.check(
+          input,
+          Object.assign({}, options, { filepath: filename })
+        )
+      ) {
         if (!write) {
           console.log(filename);
         }
@@ -383,7 +371,6 @@ if (stdin) {
         }
       }
     } else if (argv["debug-check"]) {
-      process.stdout.write("\n");
       if (output) {
         console.log(output);
       } else {

@@ -1,22 +1,26 @@
 "use strict";
 
+const isProduction = process.env.NODE_ENV === "production";
 const fs = require("fs");
 const extname = require("path").extname;
-const prettier = require("../"); // change to ../dist/ to "test in prod"
-const parser = require("../parser");
+const prettier = require(isProduction ? "../dist/" : "../");
+const parser = require("../src/parser");
 const massageAST = require("../src/clean-ast.js").massageAST;
 
 const AST_COMPARE = process.env["AST_COMPARE"];
 const VERIFY_ALL_PARSERS = process.env["VERIFY_ALL_PARSERS"] || false;
 const ALL_PARSERS = process.env["ALL_PARSERS"]
   ? JSON.parse(process.env["ALL_PARSERS"])
-  : ["flow", "babylon", "typescript"];
+  : ["flow", "graphql", "babylon", "typescript"];
 
 function run_spec(dirname, options, additionalParsers) {
   fs.readdirSync(dirname).forEach(filename => {
-    const extension = extname(filename);
-    if (/^\.([jt]sx?|css)$/.test(extension) && filename !== "jsfmt.spec.js") {
-      const path = dirname + "/" + filename;
+    const path = dirname + "/" + filename;
+    if (
+      extname(filename) !== ".snap" &&
+      fs.lstatSync(path).isFile() &&
+      filename !== "jsfmt.spec.js"
+    ) {
       let rangeStart = 0;
       let rangeEnd = Infinity;
       const source = read(path)
@@ -93,7 +97,9 @@ function stripLocation(ast) {
         key === "loc" ||
         key === "range" ||
         key === "raw" ||
-        key === "comments"
+        key === "comments" ||
+        key === "parent" ||
+        key === "prev"
       ) {
         continue;
       }
