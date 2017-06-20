@@ -19,6 +19,7 @@ const argv = minimist(process.argv.slice(2), {
     "use-tabs",
     "semi",
     "single-quote",
+    "jsx-single-quote",
     "bracket-spacing",
     "jsx-bracket-same-line",
     // The supports-color package (a sub sub dependency) looks directly at
@@ -146,6 +147,7 @@ const options = {
   tabWidth: getIntOption("tab-width"),
   bracketSpacing: argv["bracket-spacing"],
   singleQuote: argv["single-quote"],
+  jsxSingleQuote: argv["jsx-single-quote"],
   jsxBracketSameLine: argv["jsx-bracket-same-line"],
   filepath: argv["stdin-filepath"],
   trailingComma: getTrailingComma(),
@@ -227,6 +229,7 @@ if (argv["help"] || (!filepatterns.length && !stdin)) {
       "  --use-tabs               Indent lines with tabs instead of spaces.\n" +
       "  --no-semi                Do not print semicolons, except at the beginning of lines which may need them.\n" +
       "  --single-quote           Use single quotes instead of double quotes.\n" +
+      "  --jsx-single-quote       Use single quotes instead of double quotes for JSX attributes.\n" +
       "  --no-bracket-spacing     Do not print spaces between brackets.\n" +
       "  --jsx-bracket-same-line  Put > on the last line instead of at a new line.\n" +
       "  --trailing-comma <none|es5|all>\n" +

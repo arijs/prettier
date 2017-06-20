@@ -11,6 +11,7 @@ const defaults = {
   tabWidth: 2,
   printWidth: 80,
   singleQuote: false,
+  jsxSingleQuote: false,
   trailingComma: "none",
   bracketSpacing: true,
   jsxBracketSameLine: false,

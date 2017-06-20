@@ -1570,7 +1570,11 @@ function genericPrintNoParens(path, options, print, args) {
         let res;
         if (isStringLiteral(n.value)) {
           const value = n.value.extra ? n.value.extra.raw : n.value.raw;
-          res = '"' + value.slice(1, -1).replace(/"/g, "&quot;") + '"';
+          if (options.jsxSingleQuote) {
+            res = "'" + value.slice(1, -1).replace(/'/g, "&#39;") + "'";
+          } else {
+            res = '"' + value.slice(1, -1).replace(/"/g, "&quot;") + '"';
+          }
         } else {
           res = path.call(print, "value");
         }
