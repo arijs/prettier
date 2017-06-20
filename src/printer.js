@@ -27,7 +27,6 @@ const addAlignmentToDoc = docBuilders.addAlignmentToDoc;
 const docUtils = require("./doc-utils");
 const willBreak = docUtils.willBreak;
 const isLineNext = docUtils.isLineNext;
-const getFirstString = docUtils.getFirstString;
 const isEmpty = docUtils.isEmpty;
 
 function shouldPrintComma(options, level) {
@@ -4207,16 +4206,6 @@ function adjustClause(node, clause, forceSpace) {
   return indent(concat([line, clause]));
 }
 
-function isCurlyBracket(doc) {
-  const str = getFirstString(doc);
-  return str === "{" || str === "{}";
-}
-
-function isEmptyBlock(doc) {
-  const str = getFirstString(doc);
-  return str === "{}";
-}
-
 function nodeStr(node, options, isFlowOrTypeScriptDirectiveLiteral) {
   const raw = node.extra ? node.extra.raw : node.raw;
   // `rawContent` is the string exactly like it appeared in the input source
@@ -4547,29 +4536,6 @@ function isObjectTypePropertyAFunction(node) {
   );
 }
 
-function shouldPrintSameLine(node) {
-  const type = node.type;
-  return (
-    namedTypes.Literal.check(node) ||
-    type === "ArrayExpression" ||
-    type === "ArrayPattern" ||
-    type === "ArrowFunctionExpression" ||
-    type === "AssignmentPattern" ||
-    type === "CallExpression" ||
-    type === "FunctionExpression" ||
-    type === "Identifier" ||
-    type === "JSXElement" ||
-    type === "Literal" ||
-    type === "MemberExpression" ||
-    type === "NewExpression" ||
-    type === "ObjectExpression" ||
-    type === "ObjectPattern" ||
-    type === "StringLiteral" ||
-    type === "ThisExpression" ||
-    type === "TypeCastExpression" ||
-    type === "UnaryExpression"
-  );
-}
 // TODO: This is a bad hack and we need a better way to distinguish between
 // arrow functions and otherwise
 function isFunctionNotation(node) {
