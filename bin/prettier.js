@@ -264,6 +264,8 @@ if (argv["help"] || (!filepatterns.length && !stdin)) {
       "  --align-object-properties\n" +
       "                           Align colons in multiline object literals. Does nothing if object has computed property names.\n" +
       "  --no-space-empty-fn      Omit space before empty function body. Defaults to false.\n" +
+      "  --space-before-function-paren\n" +
+      "                           Put a space before function parenthesis. Defaults to false.\n" +
       "  --parser <flow|babylon|typescript|postcss|json>\n" +
       "                           Specify which parse to use. Defaults to babylon.\n" +
       "  --cursor-offset <int>    Print (to stderr) where a cursor at the given position would move to after formatting.\n" +
