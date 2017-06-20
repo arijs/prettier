@@ -2,6 +2,29 @@
 
 const validate = require("jest-validate").validate;
 const deprecatedConfig = require("./deprecated");
+const defaultsTrailingComma = {
+  array: false,
+  object: false,
+  import: false,
+  export: false,
+  arguments: false
+};
+const trailingCommaPresets = {
+  none: Object.assign({}, defaultsTrailingComma),
+  es5: Object.assign({}, defaultsTrailingComma, {
+    array: true,
+    object: true,
+    import: true,
+    export: true
+  }),
+  all: Object.assign({}, defaultsTrailingComma, {
+    array: true,
+    object: true,
+    import: true,
+    export: true,
+    arguments: true
+  })
+};
 
 const defaults = {
   cursorOffset: -1,
@@ -11,12 +34,21 @@ const defaults = {
   tabWidth: 2,
   printWidth: 80,
   singleQuote: false,
-  trailingComma: "none",
-  bracketSpacing: true,
+  trailingComma: Object.assign({}, defaultsTrailingComma),
+  bracketSpacing: false,
+  bracesSpacing: true,
+  breakProperty: false,
+  arrowParens: false,
+  arrayExpand: false,
+  flattenTernaries: false,
+  breakBeforeElse: false,
   jsxBracketSameLine: false,
+  alignObjectProperties: false,
+  noSpaceEmptyFn: false,
   parser: "babylon",
   semi: true,
-  spaceBeforeFunctionParen: false
+  spaceBeforeFunctionParen: false,
+  __log: false
 };
 
 const exampleConfig = Object.assign({}, defaults, {
@@ -40,16 +72,7 @@ function normalize(options) {
     normalized.parser = "json";
   }
 
-  if (typeof normalized.trailingComma === "boolean") {
-    // Support a deprecated boolean type for the trailing comma config
-    // for a few versions. This code can be removed later.
-    normalized.trailingComma = "es5";
-
-    console.warn(
-      "Warning: `trailingComma` without any argument is deprecated. " +
-        'Specify "none", "es5", or "all".'
-    );
-  }
+  normalized.trailingComma = normalizeTrailingComma(normalized.trailingComma);
 
   const parserBackup = normalized.parser;
   if (typeof normalized.parser === "function") {
@@ -75,6 +98,42 @@ function normalize(options) {
   });
 
   return normalized;
+}
+
+function normalizeTrailingComma(value) {
+  var trailingComma;
+  if ("boolean" === typeof value) {
+    // Support a deprecated boolean type for the trailing comma config
+    // for a few versions. This code can be removed later.
+    trailingComma = Object.assign({}, trailingCommaPresets[value ? "es5" : "none"]);
+
+    console.warn(
+      "Warning: `trailingComma` without any argument is deprecated. " +
+        'Specify "none", "es5", or "all".'
+    );
+  } else if ("object" === typeof value) {
+    trailingComma = {};
+    Object.keys(defaultsTrailingComma).forEach(k => {
+      trailingComma[k] = null == value[k]
+        ? defaultsTrailingComma[k]
+        : value[k];
+    });
+  } else if ("string" === typeof value) {
+    trailingComma = trailingCommaPresets[value];
+    if ( trailingComma ) {
+      trailingComma = Object.assign({}, trailingComma);
+    } else {
+      trailingComma = Object.assign({}, trailingCommaPresets.none);
+      value.split(',').forEach(k => {
+        if (k in defaultsTrailingComma) {
+          trailingComma[k] = true;
+        }
+      });
+    }
+  } else {
+    trailingComma = Object.assign({}, defaultsTrailingComma);
+  }
+  return trailingComma;
 }
 
 module.exports = { normalize };

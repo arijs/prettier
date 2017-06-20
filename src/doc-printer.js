@@ -64,6 +64,7 @@ function fits(next, restCommands, width, mustBeFlat) {
     const ind = x[0];
     const mode = x[1];
     const doc = x[2];
+    const align = x[3];
 
     if (typeof doc === "string") {
       width -= doc.length;
@@ -99,12 +100,12 @@ function fits(next, restCommands, width, mustBeFlat) {
         case "if-break":
           if (mode === MODE_BREAK) {
             if (doc.breakContents) {
-              cmds.push([ind, mode, doc.breakContents]);
+              cmds.push([ind, mode, doc.breakContents, align]);
             }
           }
           if (mode === MODE_FLAT) {
             if (doc.flatContents) {
-              cmds.push([ind, mode, doc.flatContents]);
+              cmds.push([ind, mode, doc.flatContents, align]);
             }
           }
 
@@ -149,6 +150,7 @@ function printDocToString(doc, options) {
     const ind = x[0];
     const mode = x[1];
     const doc = x[2];
+    const align = x[3];
 
     if (typeof doc === "string") {
       out.push(doc);
@@ -181,7 +183,8 @@ function printDocToString(doc, options) {
                 cmds.push([
                   ind,
                   doc.break ? MODE_BREAK : MODE_FLAT,
-                  doc.contents
+                  doc.contents,
+                  align
                 ]);
 
                 break;
@@ -209,18 +212,18 @@ function printDocToString(doc, options) {
                     doc.expandedStates[doc.expandedStates.length - 1];
 
                   if (doc.break) {
-                    cmds.push([ind, MODE_BREAK, mostExpanded]);
+                    cmds.push([ind, MODE_BREAK, mostExpanded, align]);
 
                     break;
                   } else {
                     for (let i = 1; i < doc.expandedStates.length + 1; i++) {
                       if (i >= doc.expandedStates.length) {
-                        cmds.push([ind, MODE_BREAK, mostExpanded]);
+                        cmds.push([ind, MODE_BREAK, mostExpanded, align]);
 
                         break;
                       } else {
                         const state = doc.expandedStates[i];
-                        const cmd = [ind, MODE_FLAT, state];
+                        const cmd = [ind, MODE_FLAT, state, align];
 
                         if (fits(cmd, cmds, rem)) {
                           cmds.push(cmd);
@@ -231,7 +234,7 @@ function printDocToString(doc, options) {
                     }
                   }
                 } else {
-                  cmds.push([ind, MODE_BREAK, doc.contents]);
+                  cmds.push([ind, MODE_BREAK, doc.contents, align]);
                 }
               }
 
@@ -330,18 +333,18 @@ function printDocToString(doc, options) {
         case "if-break":
           if (mode === MODE_BREAK) {
             if (doc.breakContents) {
-              cmds.push([ind, mode, doc.breakContents]);
+              cmds.push([ind, mode, doc.breakContents, align]);
             }
           }
           if (mode === MODE_FLAT) {
             if (doc.flatContents) {
-              cmds.push([ind, mode, doc.flatContents]);
+              cmds.push([ind, mode, doc.flatContents, align]);
             }
           }
 
           break;
         case "line-suffix":
-          lineSuffix.push([ind, mode, doc.contents]);
+          lineSuffix.push([ind, mode, doc.contents, align]);
           break;
         case "line-suffix-boundary":
           if (lineSuffix.length > 0) {
@@ -372,7 +375,7 @@ function printDocToString(doc, options) {
 
             case MODE_BREAK:
               if (lineSuffix.length) {
-                cmds.push([ind, mode, doc]);
+                cmds.push([ind, mode, doc, align]);
                 [].push.apply(cmds, lineSuffix.reverse());
                 lineSuffix = [];
                 break;
