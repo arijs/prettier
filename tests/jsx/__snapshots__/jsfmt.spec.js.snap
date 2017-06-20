@@ -138,7 +138,162 @@ exports[`expression.js 1`] = `
 
 `;
 
+exports[`expression.js 2`] = `
+<View
+  style={
+    {
+      someVeryLongStyle1: "true",
+      someVeryLongStyle2: "true",
+      someVeryLongStyle3: "true",
+      someVeryLongStyle4: "true"
+    }
+  }
+/>;
+
+<View
+  style={
+    [
+      {
+        someVeryLongStyle1: "true",
+        someVeryLongStyle2: "true",
+        someVeryLongStyle3: "true",
+        someVeryLongStyle4: "true"
+      }
+    ]
+  }
+/>;
+
+<Something>
+  {() => (
+    <SomethingElse>
+      <span />
+    </SomethingElse>
+  )}
+</Something>;
+
+<Something>
+  {items.map(item => (
+    <SomethingElse>
+      <span />
+    </SomethingElse>
+  ))}
+</Something>;
+
+<Something>
+  {function() {
+    return (
+      <SomethingElse>
+        <span />
+      </SomethingElse>
+    );
+  }}
+</Something>;
+
+<RadioListItem
+  key={option}
+  imageSource={this.props.veryBigItemImageSourceFunc &&
+    this.props.veryBigItemImageSourceFunc(option)}
+  imageSize={this.props.veryBigItemImageSize}
+  imageView={this.props.veryBigItemImageViewFunc &&
+    this.props.veryBigItemImageViewFunc(option)}
+  heading={this.props.displayTextFunc(option)}
+  value={option}
+/>;
+
+<ParentComponent prop={
+  <Child>
+    test
+  </Child>
+}/>;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<View
+  style={{
+    someVeryLongStyle1: "true",
+    someVeryLongStyle2: "true",
+    someVeryLongStyle3: "true",
+    someVeryLongStyle4: "true"
+  }}
+/>;
+
+<View
+  style={[
+    {
+      someVeryLongStyle1: "true",
+      someVeryLongStyle2: "true",
+      someVeryLongStyle3: "true",
+      someVeryLongStyle4: "true"
+    }
+  ]}
+/>;
+
+<Something>
+  {() =>
+    <SomethingElse>
+      <span />
+    </SomethingElse>}
+</Something>;
+
+<Something>
+  {items.map(item =>
+    <SomethingElse>
+      <span />
+    </SomethingElse>
+  )}
+</Something>;
+
+<Something>
+  {function() {
+    return (
+      <SomethingElse>
+        <span />
+      </SomethingElse>
+    );
+  }}
+</Something>;
+
+<RadioListItem
+  key={option}
+  imageSource={
+    this.props.veryBigItemImageSourceFunc &&
+    this.props.veryBigItemImageSourceFunc(option)
+  }
+  imageSize={this.props.veryBigItemImageSize}
+  imageView={
+    this.props.veryBigItemImageViewFunc &&
+    this.props.veryBigItemImageViewFunc(option)
+  }
+  heading={this.props.displayTextFunc(option)}
+  value={option}
+/>;
+
+<ParentComponent
+  prop={
+    <Child>
+      test
+    </Child>
+  }
+/>;
+
+`;
+
 exports[`flow_fix_me.js 1`] = `
+const aDiv = (
+  /* $FlowFixMe */
+  <div className="foo">
+    Foo bar
+  </div>
+);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const aDiv = (
+  /* $FlowFixMe */
+  <div className="foo">
+    Foo bar
+  </div>
+);
+
+`;
+
+exports[`flow_fix_me.js 2`] = `
 const aDiv = (
   /* $FlowFixMe */
   <div className="foo">
@@ -166,7 +321,88 @@ export default () => <a href="https://foo.bar?q1=foo&q2=bar" />;
 
 `;
 
+exports[`html_escape.js 2`] = `
+export default () => <a href="https://foo.bar?q1=foo&q2=bar" />;
+
+() => <img src="https://bar.foo?param1=1&param2=2" />;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export default () => <a href="https://foo.bar?q1=foo&q2=bar" />;
+
+() => <img src="https://bar.foo?param1=1&param2=2" />;
+
+`;
+
 exports[`hug.js 1`] = `
+<div>
+  {__DEV__
+    ? this.renderDevApp()
+    : <div>
+      {routes.map(route => (
+        <MatchAsync
+          key={\`\${route.to}-async\`}
+          pattern={route.to}
+          exactly={route.to === "/"}
+          getComponent={routeES6Modules[route.value]}
+        />
+      ))}
+    </div>}
+</div>;
+
+<div>
+  {__DEV__ && <div>
+    {routes.map(route => (
+      <MatchAsync
+        key={\`\${route.to}-async\`}
+        pattern={route.to}
+        exactly={route.to === "/"}
+        getComponent={routeES6Modules[route.value]}
+      />
+    ))}
+    </div>}
+</div>;
+
+<div>
+  {member.memberName.memberSomething +
+    (member.memberDef.memberSomething.signatures ? '()' : '')}
+</div>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<div>
+  {__DEV__
+    ? this.renderDevApp()
+    : <div>
+        {routes.map(route =>
+          <MatchAsync
+            key={\`\${route.to}-async\`}
+            pattern={route.to}
+            exactly={route.to === "/"}
+            getComponent={routeES6Modules[route.value]}
+          />
+        )}
+      </div>}
+</div>;
+
+<div>
+  {__DEV__ &&
+    <div>
+      {routes.map(route =>
+        <MatchAsync
+          key={\`\${route.to}-async\`}
+          pattern={route.to}
+          exactly={route.to === "/"}
+          getComponent={routeES6Modules[route.value]}
+        />
+      )}
+    </div>}
+</div>;
+
+<div>
+  {member.memberName.memberSomething +
+    (member.memberDef.memberSomething.signatures ? "()" : "")}
+</div>;
+
+`;
+
+exports[`hug.js 2`] = `
 <div>
   {__DEV__
     ? this.renderDevApp()
@@ -267,7 +503,68 @@ const tabs = [
 
 `;
 
+exports[`object-property.js 2`] = `
+const tabs = [
+  {
+    title: "General Info",
+    content: (
+      <GeneralForm
+        long-attribute="i-need-long-value-here"
+        onSave={ onSave }
+        onCancel={ onCancel }
+        countries={ countries }
+      />
+    )
+  }
+];
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const tabs = [
+  {
+    title: "General Info",
+    content: (
+      <GeneralForm
+        long-attribute="i-need-long-value-here"
+        onSave={onSave}
+        onCancel={onCancel}
+        countries={countries}
+      />
+    )
+  }
+];
+
+`;
+
 exports[`open-break.js 1`] = `
+<td
+onClick={() => {
+  a
+}}>{header}{showSort}</td>;
+
+<td
+onClick={() => {
+  a
+}}>{header}<showSort attr="long long long long long long long long long long long"/></td>;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<td
+  onClick={() => {
+    a;
+  }}
+>
+  {header}{showSort}
+</td>;
+
+<td
+  onClick={() => {
+    a;
+  }}
+>
+  {header}
+  <showSort attr="long long long long long long long long long long long" />
+</td>;
+
+`;
+
+exports[`open-break.js 2`] = `
 <td
 onClick={() => {
   a
@@ -326,6 +623,35 @@ a = [
 
 `;
 
+exports[`parens.js 2`] = `
+a = [
+  <path
+    key='0'
+    d='M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,'
+  />,
+  <path
+    key='1'
+    d='M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,'
+  />,
+];
+
+<div {...((foo || foo === null) ? {foo} : null)} />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+a = [
+  <path
+    key="0"
+    d="M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,"
+  />,
+  <path
+    key="1"
+    d="M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,M13.6,10.6l,4-2.8L9.5,"
+  />
+];
+
+<div {...(foo || foo === null ? { foo } : null)} />;
+
+`;
+
 exports[`quotes.js 1`] = `
 <div id="&quot;'<>&amp;quot;" />;
 <div id='"&#39;<>&amp;quot;' />;
@@ -337,7 +663,61 @@ exports[`quotes.js 1`] = `
 
 `;
 
+exports[`quotes.js 2`] = `
+<div id="&quot;'<>&amp;quot;" />;
+<div id='"&#39;<>&amp;quot;' />;
+<div id={'\\'"&quot;<>&amp;quot;'} />;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<div id="&quot;'<>&amp;quot;" />;
+<div id="&quot;&#39;<>&amp;quot;" />;
+<div id={"'\\"&quot;<>&amp;quot;"} />;
+
+`;
+
 exports[`spacing.js 1`] = `
+const Labels = {
+  label1: (
+    <fbt>
+      Label 1
+    </fbt>
+  ),
+
+  label2: (
+    <fbt>
+      Label 2
+    </fbt>
+  ),
+
+  label3: (
+    <fbt>
+      Label 3
+    </fbt>
+  ),
+};
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const Labels = {
+  label1: (
+    <fbt>
+      Label 1
+    </fbt>
+  ),
+
+  label2: (
+    <fbt>
+      Label 2
+    </fbt>
+  ),
+
+  label3: (
+    <fbt>
+      Label 3
+    </fbt>
+  )
+};
+
+`;
+
+exports[`spacing.js 2`] = `
 const Labels = {
   label1: (
     <fbt>
