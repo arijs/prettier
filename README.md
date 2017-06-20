@@ -1,9 +1,18 @@
-# Prettier
+# Prettier Miscellaneous
 
 [![Gitter](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/jlongster/prettier)
-[![Build Status](https://travis-ci.org/prettier/prettier.svg?branch=master)](https://travis-ci.org/prettier/prettier)
-[![NPM version](https://img.shields.io/npm/v/prettier.svg)](https://www.npmjs.com/package/prettier)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Build Status](https://travis-ci.org/arijs/prettier-miscellaneous.svg?branch=master)](https://travis-ci.org/arijs/prettier-miscellaneous)
+[![CircleCI Status](https://circleci.com/gh/arijs/prettier-miscellaneous.svg?style=shield&circle-token=5b135ff8817790a20e0eb1c5853752b931bc42c0)](https://circleci.com/gh/arijs/prettier-miscellaneous)
+[![NPM version](https://img.shields.io/npm/v/prettier-miscellaneous.svg)](https://www.npmjs.com/package/prettier-miscellaneous)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier_misc-ff69b4.svg)](https://github.com/arijs/prettier-miscellaneous)
+
+> # CONFIGURATION WELCOME
+>
+> This is a fork of [prettier/prettier](https://github.com/prettier/prettier), with a goal of supporting additional options not picked up by official Prettier.
+>
+> If you want to add an option to Prettier Miscellaneous, please send a PR! 😃
+>
+> ![Happyness](https://i.redd.it/p63sznfyu38y.jpg)
 
 <details>
 <summary><strong>Table of Contents</strong></summary>
@@ -149,19 +158,21 @@ objects]._
 Install:
 
 ```
+yarn add prettier-miscellaneous --dev
+=======
 yarn add prettier --dev
 ```
 
 You can install it globally if you like:
 
 ```
-yarn global add prettier
+yarn global add prettier-miscellaneous
 ```
 
 *We're defaulting to `yarn` but you can use `npm` if you like:*
 
 ```
-npm install [-g] prettier
+npm install [-g] prettier-miscellaneous
 ```
 
 ### CLI
@@ -279,21 +290,25 @@ Prettier ships with a handful of customizable format options, usable in both the
 | **Quotes** - Use single quotes instead of double quotes.<br /><br />Notes:<ul><li>Quotes in JSX will always be double and ignore this setting, unless `--jsx-single-quote` is used.</li><li>If the number of quotes outweighs the other quote, the quote which is less used will be used to format the string - Example: `"I'm double quoted"` results in `"I'm double quoted"` and `"This \"example\" is single quoted"` results in `'This "example" is single quoted'`.</li></ul> | `false` | CLI: `--single-quote` <br />API: `singleQuote: <bool>` |
 | **JSX Single Quote** - Use single quotes instead of double quotes for JSX attributes. | `false` | CLI: `--jsx-single-quote` <br />API: `jsxSingleQuote: <bool>` |
 | **Trailing Commas** - Print trailing commas wherever possible.<br /><br />Valid options: <ul><li>`"none"` - no trailing commas </li><li>`"es5"` - trailing commas where valid in ES5 (objects, arrays, etc.)</li><li>`"all"` - trailing commas wherever possible (function arguments). This requires node 8 or a [transform](https://babeljs.io/docs/plugins/syntax-trailing-function-commas/).</li></ul> | `"none"` | CLI: <code>--trailing-comma <none&#124;es5&#124;all></code> <br />API: <code>trailingComma: "<none&#124;es5&#124;all>"</code> |
-| **Bracket Spacing** - Print spaces between brackets in object literals.<br /><br />Valid options: <ul><li>`true` - Example: `{ foo: bar }`</li><li>`false` - Example: `{foo: bar}`</li> | `true` | CLI: `--no-bracket-spacing` <br />API: `bracketSpacing: <bool>` |
+| **Trailing Commas (extended)** - You can also customize each place to use trailing commas:<br /><br />Valid options: <br /> - `"array"` <br/> - `"object"` <br /> - `"import"` <br /> - `"export"` <br /> - `"arguments"` | `"none"` | You can use a comma separated string list, or an object in the API.<br /><br />CLI: <code>--trailing-comma "array,object,import,export,arguments"</code> <br />API: <code>trailingComma: { array: true, object: true, import: true, export: true, arguments: false }</code> |
+| **Bracket Spacing** - Print spaces between brackets in array literals.<br /><br />Valid options: <br /> - `true` - Example: `[ foo: bar ]` <br /> - `false` - Example: `[foo: bar]` | `true` | CLI: `--no-bracket-spacing` <br/>API: `bracketSpacing: <bool>` |
+| **Braces Spacing** - Print spaces between braces in object literals.<br /><br />Valid options: <ul><li>`true` - Example: `{ foo: bar }`</li><li>`false` - Example: `{foo: bar}`</li> | `true` | CLI: `--no-braces-spacing` <br />API: `bracesSpacing: <bool>` |
 | **JSX Brackets on Same Line** - Put the `>` of a multi-line JSX element at the end of the last line instead of being alone on the next line | `false` | CLI: `--jsx-bracket-same-line` <br />API: `jsxBracketSameLine: <bool>` |
+| **Align Object Properties** - Align colons in multiline object literals. Does nothing if object has computed property names. | `false` | CLI: `--align-object-properties` <br/>API: `alignObjectProperties: <bool>` |
+| **No Space in Empty Function** - Omit space before empty anonymous function body.<br /><br />Valid options: <br /> - `true` <br /> - `false` | `false` | CLI: `--no-space-empty-fn` <br/>API: `noSpaceEmptyFn: <bool>` |
+| **Space before Function Paren** - Put a [space before function parenthesis](http://eslint.org/docs/rules/space-before-function-paren#always).<br /><br />Valid options: <br /> - `true` <br /> - `false` | `false` | CLI: `--space-before-function-paren` <br/>API: `spaceBeforeFunctionParen: <bool>` |
 | **Cursor Offset** - Specify where the cursor is. This option only works with `prettier.formatWithCursor`, and cannot be used with `rangeStart` and `rangeEnd`. | `-1` | CLI: `--cursor-offset <int>` <br />API: `cursorOffset: <int>` |
 | **Range Start** - Format code starting at a given character offset. The range will extend backwards to the start of the first line containing the selected statement. This option cannot be used with `cursorOffset`. | `0` | CLI: `--range-start <int>` <br />API: `rangeStart: <int>` |
 | **Range End** - Format code ending at a given character offset (exclusive). The range will extend forwards to the end of the selected statement. This option cannot be used with `cursorOffset`. | `Infinity` | CLI: `--range-end <int>` <br />API: `rangeEnd: <int>` |
 | **Parser** - Specify which parser to use. Both the `babylon` and `flow` parsers support the same set of JavaScript features (including Flow). Prettier automatically infers the parser from the input file path, so you shouldn't have to change this setting. <br />Built-in parsers: <ul><li>`babylon`</li><li>`flow`</li><li>`typescript`</li><li>`postcss`</li><li>`json`</li></ul>[Custom parsers](#custom-parser-api) are also supported. | `babylon` | CLI: <br />`--parser <string>` <br />`--parser ./path/to/my-parser` <br />API: <br />`parser: "<string>"` <br />`parser: require("./my-parser")` |
 | **Filepath** - Specify the input filepath this will be used to do parser inference.<br /><br /> Example: <br />`cat foo \| prettier --stdin-filepath foo.css`<br /> will default to use `postcss` parser |  | CLI: `--stdin-filepath` <br />API: `filepath: "<string>"` |
 
-
 ### API
 
 The API has three functions, exported as `format`, `check`, and `formatWithCursor`. `format` usage is as follows:
 
 ```js
-const prettier = require("prettier");
+const prettier = require("prettier-miscellaneous");
 
 const options = {} // optional
 prettier.format(source, options);
@@ -374,7 +389,7 @@ matrix(
 
 ### Atom
 
-Atom users can simply install the [prettier-atom](https://github.com/prettier/prettier-atom) package and use
+Atom users can simply install the [`prettier-atom-with-tabs`](https://atom.io/packages/prettier-atom-with-tabs) package and use
 `Ctrl+Alt+F` to format a file (or format on save if enabled).
 
 ### Emacs
@@ -390,9 +405,9 @@ Vim users can simply install either [sbdchd](https://github.com/sbdchd)/[neoform
 
 Can be installed using the extension sidebar. Search for `Prettier - JavaScript formatter`.
 
-Can also be installed using `ext install prettier-vscode`.
+Can also be installed using `ext install prettier-vscode-with-tabs`
 
-[Check its repository for configuration and shortcuts](https://github.com/esbenp/prettier-vscode)
+[Check its repository for configuration and shortcuts](https://marketplace.visualstudio.com/items?itemName=passionkind.prettier-vscode-with-tabs)
 
 ### Visual Studio
 

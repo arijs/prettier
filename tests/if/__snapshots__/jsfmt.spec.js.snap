@@ -1,6 +1,116 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`curly_braces.js 1`] = `
+if(1){go();}else if(2){go();}else{go();}
+if(1)
+{
+go();
+}
+else if(2)
+{
+go();
+}
+else
+{
+go();
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if (1) {
+  go();
+} else if (2) {
+  go();
+} else {
+  go();
+}
+if (1) {
+  go();
+} else if (2) {
+  go();
+} else {
+  go();
+}
+
+`;
+
+exports[`curly_braces.js 2`] = `
+if(1){go();}else if(2){go();}else{go();}
+if(1)
+{
+go();
+}
+else if(2)
+{
+go();
+}
+else
+{
+go();
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if (1) {
+  go();
+}
+else if (2) {
+  go();
+}
+else {
+  go();
+}
+if (1) {
+  go();
+}
+else if (2) {
+  go();
+}
+else {
+  go();
+}
+
+`;
+
 exports[`else.js 1`] = `
+// Both functions below should be formatted exactly the same
+
+function f() {
+  if (position)
+    return {name: pair};
+  else
+    return {name: pair.substring(0, position), value: pair.substring(position + 1)};
+}
+
+function f() {
+  if (position)
+    return {name: pair};
+  else
+    return {
+      name: pair.substring(0, position),
+      value: pair.substring(position + 1)
+    };
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Both functions below should be formatted exactly the same
+
+function f() {
+  if (position) return { name: pair };
+  else
+    return {
+      name: pair.substring(0, position),
+      value: pair.substring(position + 1)
+    };
+}
+
+function f() {
+  if (position) return { name: pair };
+  else
+    return {
+      name: pair.substring(0, position),
+      value: pair.substring(position + 1)
+    };
+}
+
+`;
+
+exports[`else.js 2`] = `
 // Both functions below should be formatted exactly the same
 
 function f() {
@@ -116,7 +226,122 @@ async function f() {
 
 `;
 
+exports[`if_comments.js 2`] = `
+async function f() {
+  if (untrackedChoice === 0) /* Cancel */ {
+    return null;
+  } else if (untrackedChoice === 1) /* Add */ {
+    await repository.addAll(Array.from(untrackedChanges.keys()));
+    shouldAmend = true;
+  } else if (untrackedChoice === 2) /* Allow Untracked */ {
+    allowUntracked = true;
+  }
+}
+
+async function f() {
+  if (untrackedChoice === 0)
+    /* Cancel */ {
+      return null;
+    }
+  else if (untrackedChoice === 1)
+    /* Add */ {
+      await repository.addAll(Array.from(untrackedChanges.keys()));
+      shouldAmend = true;
+    }
+  else if (untrackedChoice === 2)
+    /* Allow Untracked */ {
+      allowUntracked = true;
+    }
+}
+
+async function f() {
+  if (untrackedChoice === 0) {
+    /* Cancel */ return null;
+  } else if (untrackedChoice === 1) {
+    /* Add */ await repository.addAll(Array.from(untrackedChanges.keys()));
+    shouldAmend = true;
+  } else if (untrackedChoice === 2) {
+    /* Allow Untracked */ allowUntracked = true;
+  }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+async function f() {
+  if (untrackedChoice === 0) {
+    /* Cancel */ return null;
+  }
+  else if (untrackedChoice === 1) {
+    /* Add */ await repository.addAll(Array.from(untrackedChanges.keys()));
+    shouldAmend = true;
+  }
+  else if (untrackedChoice === 2) {
+    /* Allow Untracked */ allowUntracked = true;
+  }
+}
+
+async function f() {
+  if (untrackedChoice === 0) {
+    /* Cancel */ return null;
+  }
+  else if (untrackedChoice === 1) {
+    /* Add */ await repository.addAll(Array.from(untrackedChanges.keys()));
+    shouldAmend = true;
+  }
+  else if (untrackedChoice === 2) {
+    /* Allow Untracked */ allowUntracked = true;
+  }
+}
+
+async function f() {
+  if (untrackedChoice === 0) {
+    /* Cancel */ return null;
+  }
+  else if (untrackedChoice === 1) {
+    /* Add */ await repository.addAll(Array.from(untrackedChanges.keys()));
+    shouldAmend = true;
+  }
+  else if (untrackedChoice === 2) {
+    /* Allow Untracked */ allowUntracked = true;
+  }
+}
+
+`;
+
 exports[`trailing_comment.js 1`] = `
+if (code === 92 /* '\\' */) {}
+if (code === 92 /* '\\' */ /* '\\' */) {}
+
+if (code === 92) /* '\\' */ {}
+if (code === 92) { /* '\\' */ }
+
+if (
+  1
+  // Comment
+) {
+  a;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if (code === 92 /* '\\' */) {
+}
+if (code === 92 /* '\\' */ /* '\\' */) {
+}
+
+if (code === 92) {
+  /* '\\' */
+}
+if (code === 92) {
+  /* '\\' */
+}
+
+if (
+  1
+  // Comment
+) {
+  a;
+}
+
+`;
+
+exports[`trailing_comment.js 2`] = `
 if (code === 92 /* '\\' */) {}
 if (code === 92 /* '\\' */ /* '\\' */) {}
 
