@@ -145,7 +145,7 @@ function getTrailingComma() {
       // Allow user to customize each item separated with commas
       // see src/options.js
       return argv["trailing-comma"];
-      //throw new Error("Invalid option for --trailing-comma");
+    //throw new Error("Invalid option for --trailing-comma");
   }
 }
 

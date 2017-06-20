@@ -209,20 +209,20 @@ function getPropertyPadding(options, path) {
   const nameLength = type === "Identifier"
     ? n.name.length
     : type === "NumericLiteral"
-        ? printNumber(n.extra.raw).length
-        : type === "StringLiteral" ? nodeStr(n, options).length : undefined;
+      ? printNumber(n.extra.raw).length
+      : type === "StringLiteral" ? nodeStr(n, options).length : undefined;
 
   if (nameLength === undefined) {
     return "";
   }
 
   const properties = parentObject.properties;
-  const lengths = properties.map(
-    p => {
-      if (!p.key) return 0;
-      return p.key.end - p.key.start + (p.computed ? 2 : 0)
+  const lengths = properties.map(p => {
+    if (!p.key) {
+      return 0;
     }
-  );
+    return p.key.end - p.key.start + (p.computed ? 2 : 0);
+  });
   const maxLength = Math.max.apply(null, lengths);
   const padLength = maxLength - nameLength + 1;
   const padding = " ".repeat(padLength);
@@ -1049,7 +1049,10 @@ function genericPrintNoParens(path, options, print, args) {
         parts.push(path.call(print, "value"));
       } else {
         let printedLeft;
-        let propertyPadding = path.call(getPropertyPadding.bind(null, options), "key");
+        const propertyPadding = path.call(
+          getPropertyPadding.bind(null, options),
+          "key"
+        );
         if (n.computed) {
           printedLeft = concat([
             "[",
@@ -1126,23 +1129,20 @@ function genericPrintNoParens(path, options, print, args) {
         const needsForcedTrailingComma =
           canHaveTrailingComma && lastElem === null;
 
-        var printedElements = [];
+        const printedElements = [];
         let separatorParts = [];
-        path.each(
-          function(childPath) {
-            printedElements.push(concat(separatorParts));
-            printedElements.push(group(print(childPath)));
+        path.each(childPath => {
+          printedElements.push(concat(separatorParts));
+          printedElements.push(group(print(childPath)));
 
-            separatorParts = [",", options.arrayExpand ? hardline : line];
-            if (
-              childPath.getValue() &&
-              util.isNextLineEmpty(options.originalText, childPath.getValue())
-            ) {
-              separatorParts.push(softline);
-            }
-          },
-          "elements"
-        );
+          separatorParts = [",", options.arrayExpand ? hardline : line];
+          if (
+            childPath.getValue() &&
+            util.isNextLineEmpty(options.originalText, childPath.getValue())
+          ) {
+            separatorParts.push(softline);
+          }
+        }, "elements");
 
         parts.push(
           group(
@@ -1150,9 +1150,7 @@ function genericPrintNoParens(path, options, print, args) {
               "[",
               indent(
                 concat([
-                  options.bracketSpacing
-                    ? line
-                    : softline,
+                  options.bracketSpacing ? line : softline,
                   printArrayItems(path, options, "elements", print)
                 ])
               ),
@@ -1171,9 +1169,7 @@ function genericPrintNoParens(path, options, print, args) {
               ),
               options.arrayExpand
                 ? hardline
-                : options.bracketSpacing
-                  ? line
-                  : softline,
+                : options.bracketSpacing ? line : softline,
               "]"
             ])
           )
@@ -1284,29 +1280,26 @@ function genericPrintNoParens(path, options, print, args) {
           path.call(print, "alternate")
         ];
         return group(
-          subTernary
-          ? concat(parts)
-          : indent(concat([softline].concat(parts)))
-        );
-      } else {
-        const printed = concat([
-          line,
-          "? ",
-          n.consequent.type === "ConditionalExpression" ? ifBreak("", "(") : "",
-          align(2, path.call(print, "consequent")),
-          n.consequent.type === "ConditionalExpression" ? ifBreak("", ")") : "",
-          line,
-          ": ",
-          align(2, path.call(print, "alternate"))
-        ]);
-
-        return group(
-          concat([
-            path.call(print, "test"),
-            parent.type === "ConditionalExpression" ? printed : indent(printed)
-          ])
+          subTernary ? concat(parts) : indent(concat([softline].concat(parts)))
         );
       }
+      const printed = concat([
+        line,
+        "? ",
+        n.consequent.type === "ConditionalExpression" ? ifBreak("", "(") : "",
+        align(2, path.call(print, "consequent")),
+        n.consequent.type === "ConditionalExpression" ? ifBreak("", ")") : "",
+        line,
+        ": ",
+        align(2, path.call(print, "alternate"))
+      ]);
+
+      return group(
+        concat([
+          path.call(print, "test"),
+          parent.type === "ConditionalExpression" ? printed : indent(printed)
+        ])
+      );
     }
     case "NewExpression":
       parts.push(
@@ -2763,7 +2756,11 @@ function printStatementSequence(path, options, print) {
     const parts = [];
 
     // in no-semi mode, prepend statement with semicolon if it might break ASI
-    if (!options.semi && !isClass && stmtNeedsASIProtection(stmtPath, options)) {
+    if (
+      !options.semi &&
+      !isClass &&
+      stmtNeedsASIProtection(stmtPath, options)
+    ) {
       if (stmt.comments && stmt.comments.some(comment => comment.leading)) {
         // Note: stmtNeedsASIProtection requires stmtPath to already be printed
         // as it reads needsParens which is mutated on the instance
@@ -3419,7 +3416,8 @@ function printTypeParameters(path, options, print, paramsKey) {
         ])
       ),
       ifBreak(
-        options.parser !== "typescript" && shouldPrintComma(options, "arguments")
+        options.parser !== "typescript" &&
+          shouldPrintComma(options, "arguments")
           ? ","
           : ""
       ),
@@ -4551,7 +4549,8 @@ function isObjectTypePropertyAFunction(node) {
 
 function shouldPrintSameLine(node) {
   const type = node.type;
-  return namedTypes.Literal.check(node) ||
+  return (
+    namedTypes.Literal.check(node) ||
     type === "ArrayExpression" ||
     type === "ArrayPattern" ||
     type === "ArrowFunctionExpression" ||
@@ -4568,7 +4567,8 @@ function shouldPrintSameLine(node) {
     type === "StringLiteral" ||
     type === "ThisExpression" ||
     type === "TypeCastExpression" ||
-    type === "UnaryExpression";
+    type === "UnaryExpression"
+  );
 }
 // TODO: This is a bad hack and we need a better way to distinguish between
 // arrow functions and otherwise
