@@ -15,7 +15,8 @@ const defaults = {
   bracketSpacing: true,
   jsxBracketSameLine: false,
   parser: "babylon",
-  semi: true
+  semi: true,
+  spaceBeforeFunctionParen: false
 };
 
 const exampleConfig = Object.assign({}, defaults, {

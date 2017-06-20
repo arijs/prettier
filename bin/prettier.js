@@ -21,6 +21,7 @@ const argv = minimist(process.argv.slice(2), {
     "single-quote",
     "bracket-spacing",
     "jsx-bracket-same-line",
+    "space-before-function-paren",
     // The supports-color package (a sub sub dependency) looks directly at
     // `process.argv` for `--no-color` and such-like options. The reason it is
     // listed here is to avoid "Ignored unknown option: --no-color" warnings.
@@ -147,6 +148,7 @@ const options = {
   bracketSpacing: argv["bracket-spacing"],
   singleQuote: argv["single-quote"],
   jsxBracketSameLine: argv["jsx-bracket-same-line"],
+  spaceBeforeFunctionParen: argv["space-before-function-paren"],
   filepath: argv["stdin-filepath"],
   trailingComma: getTrailingComma(),
   parser: getParserOption()
