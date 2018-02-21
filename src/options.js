@@ -99,7 +99,6 @@ function normalize(options) {
     delete normalized.useFlowParser;
   }
 
-  debugger;
   Object.keys(defaults).forEach(k => {
     if (normalized[k] == null) {
       normalized[k] = defaults[k];
