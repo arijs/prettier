@@ -34,6 +34,7 @@ const booleanOptionNames = [
   "space-before-function-paren",
   "jsx-single-quote",
   "jsx-bracket-same-line",
+  "indent-chains",
   // Deprecated in 0.0.10
   "flow-parser"
 ];
@@ -128,6 +129,7 @@ function getOptionsForFile(filePath) {
           {
             semi: true,
             "bracket-spacing": true,
+            "indent-chains": true,
             parser: "babylon"
           },
           dashifyObject(options)
@@ -164,6 +166,7 @@ function getOptions(argv) {
     spaceBeforeFunctionParen: argv["space-before-function-paren"],
     jsxSingleQuote: argv["jsx-single-quote"],
     jsxBracketSameLine: argv["jsx-bracket-same-line"],
+    indentChains: argv["indent-chains"],
     filepath: argv["stdin-filepath"],
     trailingComma: getTrailingComma(argv),
     parser: getParserOption(argv)
@@ -330,6 +333,7 @@ if (
       "  --flatten-ternaries      Format ternaries in a flat style.\n" +
       "  --break-before-else      Put `else` clause in a new line.\n" +
       "  --jsx-bracket-same-line  Put > on the last line instead of at a new line.\n" +
+      "  --no-indent-chains       Do not indent chained calls.\n" +
       "  --trailing-comma <none|es5|all>\n" +
       "                           Print trailing commas wherever possible. Defaults to none.\n" +
       "                           You can customize with a comma separated list. 'all' is equivalent to:\n" +

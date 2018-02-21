@@ -90,6 +90,18 @@ Default | CLI Override | API Override
 --------|--------------|-------------
 `false` | `--jsx-bracket-same-line` | `jsxBracketSameLine: <bool>`
 
+## Indent Chains
+Print indents at the start of chained calls.
+
+Valid options:
+ * `true` - Print indents.
+ * `false` - Do not print indents.
+
+Default | CLI Override | API Override
+--------|--------------|-------------
+`true` | `--no-indent-chains` | `indentChains: <bool>`
+
+
 ## Range
 Format only a segment of a file.
 

@@ -54,6 +54,7 @@ conforms to a consistent style. (See this [blog post](http://jlongster.com/A-Pre
   + [Trailing Commas](#trailing-commas)
   + [Bracket Spacing](#bracket-spacing)
   + [JSX Brackets](#jsx-brackets)
+  + [Indent Chains](#indent-chains)
   + [Range](#range)
   + [Parser](#parser)
   + [Filepath](#filepath)
@@ -402,6 +403,7 @@ Prettier ships with a handful of customizable format options, usable in both the
 | **Bracket Spacing** - Print spaces between brackets in array literals.<br /><br />Valid options: <br /> - `true` - Example: `[ foo: bar ]` <br /> - `false` - Example: `[foo: bar]` | `true` | CLI: `--no-bracket-spacing` <br/>API: `bracketSpacing: <bool>` |
 | **Braces Spacing** - Print spaces between braces in object literals.<br /><br />Valid options: <ul><li>`true` - Example: `{ foo: bar }`</li><li>`false` - Example: `{foo: bar}`</li> | `true` | CLI: `--no-braces-spacing` <br />API: `bracesSpacing: <bool>` |
 | **JSX Brackets on Same Line** - Put the `>` of a multi-line JSX element at the end of the last line instead of being alone on the next line | `false` | CLI: `--jsx-bracket-same-line` <br />API: `jsxBracketSameLine: <bool>` |
+| **Indent Chains** - Indent chained calls.<br /><br />Valid options: <ul><li>`true` - Indent chained calls.</li><li>`false` - Do not indent chained calls.</li> | `true` | CLI: `--no-indent-chains` <br />API: `indentChains: <bool>` |
 | **Align Object Properties** - Align colons in multiline object literals. Does nothing if object has computed property names. | `false` | CLI: `--align-object-properties` <br/>API: `alignObjectProperties: <bool>` |
 | **No Space in Empty Function** - Omit space before empty anonymous function body.<br /><br />Valid options: <br /> - `true` <br /> - `false` | `false` | CLI: `--no-space-empty-fn` <br/>API: `noSpaceEmptyFn: <bool>` |
 | **Space before Function Paren** - Put a [space before function parenthesis](http://eslint.org/docs/rules/space-before-function-paren#always).<br /><br />Valid options: <br /> - `true` <br /> - `false` | `false` | CLI: `--space-before-function-paren` <br/>API: `spaceBeforeFunctionParen: <bool>` |
@@ -606,6 +608,17 @@ Put the `>` of a multi-line JSX element at the end of the last line instead of b
 Default | CLI Override | API Override
 --------|--------------|-------------
 `false` | `--jsx-bracket-same-line` | `jsxBracketSameLine: <bool>`
+
+### Indent Chains
+Print indents at the start of chained calls.
+
+Valid options:
+ * `true` - Print indents.
+ * `false` - Do not print indents.
+
+Default | CLI Override | API Override
+--------|--------------|-------------
+`true` | `--no-indent-chains` | `indentChains: <bool>`
 
 ### Range
 Format only a segment of a file.
