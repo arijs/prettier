@@ -250,7 +250,11 @@ function getPropertyPadding(options, path) {
     if (!p.key) {
       return 0;
     }
-    return p.key.end - p.key.start + (p.computed ? 2 : 0);
+    if (!p.key.end && p.key.range) {
+      return p.key.range[1] - p.key.range[0] + (p.computed ? 2 : 0);
+    } else {
+      return p.key.end - p.key.start + (p.computed ? 2 : 0);
+    }    
   });
   const maxLength = Math.max.apply(null, lengths);
   const padLength = maxLength - nameLength + 1;
